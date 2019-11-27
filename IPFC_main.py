@@ -78,7 +78,9 @@ class Login(QDialog):
         url = api_url + "getsalt"
         form_data = {"email": email}
         req = requests.get(url, data=form_data)
-        api_response = json.loads(req.text)
+        if not req.ok:
+            raise NotImplementedError()
+        api_response = req.json()
         return api_response
 
     def verify_login(self):
